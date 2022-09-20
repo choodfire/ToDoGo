@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ToDoList</title>
+	<link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+	<main class="main" id="app">
+		<div class="container">
+			<h1 class="main__title">ToDoList</h1>
+			<div class="new-task">
+				<input type="text"
+				class="new-task__input" 
+				placeholder="Добавьте задачу"
+				v-model="inputValue"
+				@keypress.enter="addNewTask"
+				>
+				<button 
+				class="new-task__btn"
+				@click="addNewTask"
+				>Добавить</button>
+			</div>
+			<div class="tasks">
+				<h2 class="tasks__title">Задачи</h2>
+				<ul class="tasks__list" 
+				v-if="tasksArr.length !== 0"			
+				>
+					<li class="tasks__item" 				
+					v-for="(task, index) in tasksArr"
+					>
+						<span>{{task}}</span>
+						<div class="item__btn">
+							<button 
+							class="item__done item-img" 
+							@click="doneTask(index)"
+							></button>
+							<button 
+							class="item__delete item-img"
+							@click="deleteTask(index)"
+							></button>
+						</div>
+					</li>
+				</ul>
+				<p v-else class="no-tasks">Задач нет</p>
+			</div>
+			<div class="tasks">
+				<h2 class="tasks__title">Выполненные задачи</h2>
+				<ul class="tasks__list" 
+				v-if="doneTasksArr.length !== 0"			
+				>
+					<li class="tasks__item completed" 				
+					v-for="(task, index) in doneTasksArr"
+					>
+						<span>{{task}}</span>
+						<div class="item__btn">
+							<button 
+							class="item__done item-img"
+							@click="undoTask(index)"
+							></button>
+							<button 
+							class="item__delete item-img"
+							@click="deleteDoneTask(index)"
+							></button>
+						</div>
+					</li>
+				</ul>
+				<p v-else class="no-tasks">Выполненных задач нет</p>
+			</div>
+		</div>
+	</main>
+	<script src="https://unpkg.com/vue@next"></script>
+	<script src="./js/app.js"></script>
+</body>
+
+</html>
