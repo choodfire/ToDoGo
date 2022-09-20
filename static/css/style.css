@@ -1,0 +1,114 @@
+@import url('reset.css');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+body{
+	background-color: rgb(208, 225, 252);
+	color: black;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+}
+
+.container{
+	max-width: 980px;
+	margin: 100px auto;
+	padding: 50px 30px;
+	background-color: #fff;
+}
+
+/* Common start */
+
+.tasks__title{
+	margin-bottom: 10px;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+.tasks__item{
+	display: flex;
+	justify-content: space-between;
+}
+
+.no-tasks{
+	margin-bottom: 20px;
+}
+
+/* Common end */
+
+/* Main start */
+
+.main__title{
+	margin-bottom: 30px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 36px;
+}
+
+/* Main end */
+
+/* Item start */
+
+.item-img{
+	width: 20px;
+	height: 20px;
+	background-size: 20px 20px;
+}
+
+.item__done {
+	margin-right: 10px;
+	background-image: url("/img/svg/done.svg");
+}
+.item__delete {
+	background-image: url("/img/svg/delete.svg");
+}
+
+/* Item end */
+
+/* New task start */
+
+.new-task {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	margin-bottom: 30px;
+}
+.new-task__input {
+	width: 70%;
+	margin-right: 20px;
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 15px;
+}
+.new-task__btn {
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 15px;
+}
+
+/* New task end */
+
+
+/* Tasks start */
+
+.tasks {
+	margin-bottom: 30px;
+	border-bottom: 1px solid #000;
+}
+
+.tasks:last-child {
+	margin-bottom: 0;
+	border-bottom: 0;
+}
+
+.tasks__item:last-child {
+	margin-bottom: 20px;
+}
+
+/* Tasks end */
+
+/* Completed tasks start */
+
+.completed {
+	opacity: 0.5;
+}
+
+/* Completed tasks end */
