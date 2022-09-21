@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<main class="main" id="app">
+	<main class="main">
 		<div class="container">
 			<h1 class="main__title">ToDoList</h1>
 			<div class="new-task">
@@ -27,8 +27,14 @@
 						<li class="tasks__item">
 							<span>{{ .Title }}</span>
 							<div class="item__btn">
-								<button class="item__done item-img"></button>
-								<button class="item__delete item-img"></button>
+								<form action="/markCompleted" method="post" class="item__btn">
+									<input type="hidden" name="token" value="{{.Id}}">
+									<button class="item__done item-img"></button>
+								</form>
+								<form action="/deleteTask" method="post" class="item__btn">
+									<input type="hidden" name="token" value="{{.Id}}">
+									<button class="item__delete item-img"></button>
+								</form>
 							</div>
 						</li>
 					</ul>
