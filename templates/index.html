@@ -15,45 +15,43 @@
 			<h1 class="main__title">ToDoList</h1>
 			<div class="new-task">
 				<form action="/addTask" method="post" class="new-task">
-					<input type="text" class="new-task__input" placeholder="Добавьте задачу" v-model="inputValue" @keypress.enter="addNewTask" name="task">
-					<input class="new-task__btn" @click="addNewTask" type="submit" value="Добавить">
+					<input type="text" class="new-task__input" placeholder="Добавьте задачу" name="task">
+					<input class="new-task__btn" type="submit" value="Добавить">
 				</form>
 			</div>
 			<div class="tasks">
 				<h2 class="tasks__title">Задачи</h2>
-				{{if .}}
+				{{ if . }}
 					{{ range . }}
-					<ul class="tasks__list" v-if="tasksArr.length !== 0">
-						<li class="tasks__item" v-for="(task, index) in tasksArr">
+					<ul class="tasks__list">
+						<li class="tasks__item">
 							<span>{{ .Title }}</span>
 							<div class="item__btn">
-								<button class="item__done item-img" @click="doneTask(index)"></button>
-								<button class="item__delete item-img" @click="deleteTask(index)"></button>
+								<button class="item__done item-img"></button>
+								<button class="item__delete item-img"></button>
 							</div>
 						</li>
 					</ul>
 					{{ end }}
 				{{ else }}
-					<p v-else class="no-tasks">Задач нет</p>
+					<p class="no-tasks">Задач нет</p>
 				{{ end }}
 			</div>
 			<div class="tasks">
 				<h2 class="tasks__title">Выполненные задачи</h2>
-				<ul class="tasks__list" v-if="doneTasksArr.length !== 0">
-					<li class="tasks__item completed" v-for="(task, index) in doneTasksArr">
-						<span>{{.Title}}</span>
+				<ul class="tasks__list">
+					<li class="tasks__item completed">
+						<span>{{ .Title }}</span>
 						<div class="item__btn">
-							<button class="item__done item-img" @click="undoTask(index)"></button>
-							<button class="item__delete item-img" @click="deleteDoneTask(index)"></button>
+							<button class="item__done item-img"></button>
+							<button class="item__delete item-img"></button>
 						</div>
 					</li>
 				</ul>
-				<p v-else class="no-tasks">Выполненных задач нет</p>
+				<p class="no-tasks">Выполненных задач нет</p>
 			</div>
 		</div>
 	</main>
-	<script src="https://unpkg.com/vue@next"></script>
-	<script src="../static/js/app.js"></script>
 </body>
 
 </html>
