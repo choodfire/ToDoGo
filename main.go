@@ -24,10 +24,13 @@ func addTask(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	taskList.AddTask("hee hee")
-	t, _ = template.ParseGlob("static/*.html")
+	t, _ = template.ParseGlob("templates/*.html")
 
 	http.HandleFunc("/", mainPage)
 	http.HandleFunc("/addTask", addTask)
+
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal(err)
 	}

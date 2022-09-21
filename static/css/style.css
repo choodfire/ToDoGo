@@ -55,10 +55,10 @@ body{
 
 .item__done {
 	margin-right: 10px;
-	background-image: url("/img/svg/done.svg");
+	background-image: url("../../static/img/svg/done.svg");
 }
 .item__delete {
-	background-image: url("/img/svg/delete.svg");
+	background-image: url("../../static/img/svg/delete.svg");
 }
 
 /* Item end */
