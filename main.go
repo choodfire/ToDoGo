@@ -14,7 +14,14 @@ var taskList data.Tasks
 
 func mainPage(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(taskList.Tasks)
-	t.ExecuteTemplate(w, "index.html", taskList.Tasks)
+	var Lists = struct {
+		Compl   []data.Task
+		UnCompl []data.Task
+	}{
+		Compl:   taskList.GetCompletedList(),
+		UnCompl: taskList.GetUncompletedList(),
+	}
+	t.ExecuteTemplate(w, "index.html", Lists)
 }
 
 func addTask(w http.ResponseWriter, r *http.Request) {
@@ -46,6 +53,8 @@ func markCompleted(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	taskList.AddTask("hee hee")
+	taskList.AddTask("hee hee2")
+	taskList.MarkCompleted(1)
 	t, _ = template.ParseGlob("templates/*.html")
 
 	http.HandleFunc("/", mainPage)

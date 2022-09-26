@@ -22,22 +22,22 @@
 			<div class="tasks">
 				<h2 class="tasks__title">Задачи</h2>
 				{{ if . }}
-					{{ range . }}
-					<ul class="tasks__list">
-						<li class="tasks__item">
-							<span>{{ .Title }}</span>
-							<div class="item__btn">
-								<form action="/markCompleted" method="post" class="item__btn">
-									<input type="hidden" name="token" value="{{.Id}}">
-									<button class="item__done item-img"></button>
-								</form>
-								<form action="/deleteTask" method="post" class="item__btn">
-									<input type="hidden" name="token" value="{{.Id}}">
-									<button class="item__delete item-img"></button>
-								</form>
-							</div>
-						</li>
-					</ul>
+					{{ range .Compl }}
+						<ul class="tasks__list">
+							<li class="tasks__item">
+								<span>{{ .Title }}</span>
+								<div class="item__btn">
+									<form action="/markCompleted" method="post" class="item__btn">
+										<input type="hidden" name="token" value="{{.Id}}">
+										<button class="item__done item-img"></button>
+									</form>
+									<form action="/deleteTask" method="post" class="item__btn">
+										<input type="hidden" name="token" value="{{.Id}}">
+										<button class="item__delete item-img"></button>
+									</form>
+								</div>
+							</li>
+						</ul>
 					{{ end }}
 				{{ else }}
 					<p class="no-tasks">Задач нет</p>
@@ -45,16 +45,27 @@
 			</div>
 			<div class="tasks">
 				<h2 class="tasks__title">Выполненные задачи</h2>
-				<ul class="tasks__list">
-					<li class="tasks__item completed">
-						<span>{{ .Title }}</span>
-						<div class="item__btn">
-							<button class="item__done item-img"></button>
-							<button class="item__delete item-img"></button>
-						</div>
-					</li>
-				</ul>
-				<p class="no-tasks">Выполненных задач нет</p>
+				{{ if . }}
+					{{ range .UnCompl }}
+						<ul class="tasks__list">
+							<li class="tasks__item completed">
+								<span>{{ .Title }}</span>
+								<div class="item__btn">
+									<form action="/markCompleted" method="post" class="item__btn">
+										<input type="hidden" name="token" value="{{.Id}}">
+										<button class="item__done item-img"></button>
+									</form>
+									<form action="/deleteTask" method="post" class="item__btn">
+										<input type="hidden" name="token" value="{{.Id}}">
+										<button class="item__delete item-img"></button>
+									</form>
+								</div>
+							</li>
+						</ul>
+					{{ end }}
+				{{ else }}
+					<p class="no-tasks">Выполненных задач нет</p>
+				{{ end }}
 			</div>
 		</div>
 	</main>
