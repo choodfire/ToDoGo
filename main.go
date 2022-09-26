@@ -36,7 +36,11 @@ func deleteTask(w http.ResponseWriter, r *http.Request) {
 
 func markCompleted(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	fmt.Println(r.Form)
+	index, err := strconv.Atoi(r.FormValue("token"))
+	if err != nil {
+		log.Fatal(err) // todo handle somehow else
+	}
+	taskList.MarkCompleted(index)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 

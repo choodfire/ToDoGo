@@ -36,3 +36,25 @@ func (t *Tasks) DeleteTask(index int) error {
 func (t *Tasks) MarkCompleted(id int) {
 	t.Tasks[id-1].isDone = true
 }
+
+func (t Tasks) GetCompletedList() []Task {
+	res := []Task{}
+	for _, task := range t.Tasks {
+		if task.isDone == true {
+			res = append(res, task)
+		}
+	}
+
+	return res
+}
+
+func (t Tasks) GetUncompletedList() []Task {
+	res := []Task{}
+	for _, task := range t.Tasks {
+		if task.isDone == false {
+			res = append(res, task)
+		}
+	}
+
+	return res
+}
