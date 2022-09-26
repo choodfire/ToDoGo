@@ -33,28 +33,22 @@ func addTask(w http.ResponseWriter, r *http.Request) {
 func deleteTask(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	fmt.Println(r.Form)
-	index, err := strconv.Atoi(r.FormValue("token"))
-	if err != nil {
-		log.Fatal(err) // todo handle somehow else
-	}
+	index, _ := strconv.Atoi(r.FormValue("token"))
 	taskList.DeleteTask(index)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func markCompleted(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	index, err := strconv.Atoi(r.FormValue("token"))
-	if err != nil {
-		log.Fatal(err) // todo handle somehow else
-	}
-	taskList.MarkCompleness(index)
+	index, _ := strconv.Atoi(r.FormValue("token"))
+	taskList.ChangeCompleness(index)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func main() {
 	taskList.AddTask("hee hee")
 	taskList.AddTask("hee hee2")
-	taskList.MarkCompleness(1)
+	taskList.ChangeCompleness(1)
 	t, _ = template.ParseGlob("templates/*.html")
 
 	http.HandleFunc("/", mainPage)

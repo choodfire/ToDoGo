@@ -1,11 +1,11 @@
 package data
 
 import (
-	"errors"
 	"time"
 )
 
 var defaultCompletedTime = time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC)
+var taskID = 0
 
 type Task struct {
 	Title         string
@@ -20,27 +20,28 @@ type Tasks struct {
 }
 
 func (t *Tasks) AddTask(taskName string) {
-	t.Tasks = append(t.Tasks, Task{taskName, len(t.Tasks) + 1, false, time.Now(), defaultCompletedTime})
+	t.Tasks = append(t.Tasks, Task{taskName, taskID, true, time.Now(), defaultCompletedTime})
+	taskID += 1
 }
 
-func (t *Tasks) DeleteTask(index int) error {
-	index = index - 1
-	if index > len(t.Tasks) {
-		return errors.New("Wrong index") // todo технически такой ошибки быть не должно, потестить
+func (t *Tasks) DeleteTask(index int) {
+	t.Tasks[index] = Task{
+		Title:         "nothing",
+		Id:            -1, // -1 means deleted
+		isDone:        false,
+		timeCreated:   defaultCompletedTime,
+		timeCompleted: defaultCompletedTime,
 	}
-	t.Tasks = append(t.Tasks[:index], t.Tasks[index+1:]...)
-
-	return nil
 }
 
-func (t *Tasks) MarkCompleness(id int) {
-	t.Tasks[id-1].isDone = !t.Tasks[id-1].isDone
+func (t *Tasks) ChangeCompleness(index int) {
+	t.Tasks[index].isDone = !t.Tasks[index].isDone
 }
 
 func (t Tasks) GetCompletedList() []Task {
 	res := []Task{}
 	for _, task := range t.Tasks {
-		if task.isDone == true {
+		if task.isDone == true && task.Id != -1 {
 			res = append(res, task)
 		}
 	}
@@ -51,7 +52,7 @@ func (t Tasks) GetCompletedList() []Task {
 func (t Tasks) GetUncompletedList() []Task {
 	res := []Task{}
 	for _, task := range t.Tasks {
-		if task.isDone == false {
+		if task.isDone == false && task.Id != -1 {
 			res = append(res, task)
 		}
 	}
