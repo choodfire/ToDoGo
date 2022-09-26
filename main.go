@@ -47,14 +47,14 @@ func markCompleted(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err) // todo handle somehow else
 	}
-	taskList.MarkCompleted(index)
+	taskList.MarkCompleness(index)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func main() {
 	taskList.AddTask("hee hee")
 	taskList.AddTask("hee hee2")
-	taskList.MarkCompleted(1)
+	taskList.MarkCompleness(1)
 	t, _ = template.ParseGlob("templates/*.html")
 
 	http.HandleFunc("/", mainPage)

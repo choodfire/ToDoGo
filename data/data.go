@@ -33,8 +33,8 @@ func (t *Tasks) DeleteTask(index int) error {
 	return nil
 }
 
-func (t *Tasks) MarkCompleted(id int) {
-	t.Tasks[id-1].isDone = true
+func (t *Tasks) MarkCompleness(id int) {
+	t.Tasks[id-1].isDone = !t.Tasks[id-1].isDone
 }
 
 func (t Tasks) GetCompletedList() []Task {
