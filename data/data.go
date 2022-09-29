@@ -19,6 +19,16 @@ type Tasks struct {
 	Tasks []Task
 }
 
+type User struct {
+	Cookies string
+	UserId  int
+	Tasks
+}
+
+type Users struct {
+	Users []User
+}
+
 func (t *Tasks) AddTask(taskName string) {
 	t.Tasks = append(t.Tasks, Task{taskName, taskID, true, time.Now(), defaultCompletedTime})
 	taskID += 1
