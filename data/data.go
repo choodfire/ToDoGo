@@ -1,6 +1,7 @@
 package data
 
 import (
+	"net/http"
 	"time"
 )
 
@@ -20,13 +21,17 @@ type Tasks struct {
 }
 
 type User struct {
-	Cookies string
-	UserId  int
+	Cookies *http.Cookie
+	//UserId  int
 	Tasks
 }
 
 type Users struct {
 	Users []User
+}
+
+func (u *Users) AddNewUser(cookie *http.Cookie) {
+	u.Users = append(u.Users, User{Cookies: cookie, Tasks: Tasks{}})
 }
 
 func (t *Tasks) AddTask(taskName string) {

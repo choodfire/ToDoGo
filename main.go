@@ -11,33 +11,40 @@ import (
 
 var t *template.Template
 
-// var taskList data.Tasks
 var users data.Users
 var cookieCounterTest int = 0
 
 func getUser(receivedCookies string) *data.User {
-	for _, user := range users.Users {
-		if user.Cookies == receivedCookies {
-			return &user
+	// for _, user := range users.Users { - iterates over a copy of array
+
+	for i := 0; i < len(users.Users); i++ {
+		if users.Users[i].Cookies.Value == receivedCookies {
+			return &users.Users[i]
 		}
 	}
 
 	return nil
 }
 
-func mainPage(w http.ResponseWriter, r *http.Request) {
+func getCookie(r *http.Request) *http.Cookie {
 	cookie, err := r.Cookie("main-cookie")
 	if err != nil {
-		// cookie not found
-		cookie := &http.Cookie{
+		cookie = &http.Cookie{
 			Name:     "main-cookie",
 			Value:    fmt.Sprintf("Cookie%d", cookieCounterTest),
 			HttpOnly: true,
 		}
-		http.SetCookie(w, cookie)
+		cookieCounterTest += 1
+		users.AddNewUser(cookie)
 	}
 
-	currentUser := getUser(cookie.Name)
+	return cookie
+}
+
+func mainPage(w http.ResponseWriter, r *http.Request) {
+	cookie := getCookie(r)
+	http.SetCookie(w, cookie)
+	currentUser := getUser(cookie.Value)
 
 	var Lists = struct {
 		Compl   []data.Task
@@ -51,32 +58,32 @@ func mainPage(w http.ResponseWriter, r *http.Request) {
 
 func addTask(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	//taskList.AddTask(r.FormValue("task"))
-	user.Tasks.AddTask(r.FormValue("task"))
+	cookie := getCookie(r)
+	currentUser := getUser(cookie.Value)
+	currentUser.Tasks.AddTask(r.FormValue("task"))
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func deleteTask(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
+	cookie := getCookie(r)
+	currentUser := getUser(cookie.Value)
 	index, _ := strconv.Atoi(r.FormValue("token"))
-	//taskList.DeleteTask(index)
-	user.Tasks.DeleteTask(index)
+	currentUser.Tasks.DeleteTask(index)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func markCompleted(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
+	cookie := getCookie(r)
+	currentUser := getUser(cookie.Value)
 	index, _ := strconv.Atoi(r.FormValue("token"))
-	//taskList.ChangeCompleness(index)
-	user.Tasks.ChangeCompleness(index)
+	currentUser.Tasks.ChangeCompleness(index)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func main() {
-	user.Tasks.AddTask("hee hee")
-	user.Tasks.AddTask("hee hee2")
-	user.Tasks.ChangeCompleness(1)
 	t, _ = template.ParseGlob("templates/*.html")
 
 	http.HandleFunc("/", mainPage)
