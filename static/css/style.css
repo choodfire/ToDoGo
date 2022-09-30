@@ -47,6 +47,11 @@ body{
 
 /* Item start */
 
+.items__btn {
+	display: flex;
+	flex-direction: row;
+}
+
 .item-img{
 	width: 20px;
 	height: 20px;
